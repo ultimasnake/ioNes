@@ -1,0 +1,56 @@
+var iNesAudio = {
+	player: null,
+	wave: null,
+	samples: null,
+	
+	initialize: function()
+	{
+		iNesAudio.player = new Audio();					// create the HTML5 audio element
+		iNesAudio.wave = new RIFFWAVE();				// create an empty wave file
+		iNesAudio.wave.header.sampleRate = 44100;		// set sample rate to 44KHz
+		iNesAudio.wave.header.numChannels = 2;			// two channels (stereo)
+		iNesAudio.wave.header.bitsPerSample = 16;		// two channels (stereo)
+		
+		nes.ui.writeAudio = iNesAudio.writeAudio;		// Redirect audio data to our audio helper
+		
+		
+		var context;
+		window.addEventListener('load', init, false);
+		function init() {
+		  try {
+		    // Fix up for prefixing
+		    window.AudioContext = window.AudioContext||window.webkitAudioContext;
+		    context = new AudioContext();
+		    alert('Web Audio API is supported in this browser');
+		  }
+		  catch(e) {
+		    alert('Web Audio API is not supported in this browser');
+		  }
+		}
+		
+	},
+	
+	toggleAudio: function()
+	{
+		nes.opts.emulateSound = !nes.opts.emulateSound;
+		
+		if( nes.opts.emulateSound )
+		{
+			iNesAudio.player = new Audio();
+			iNesAudio.player.src= 'sound.mp3';
+			iNesAudio.player.addEventListener('ended', iNesAudio.nextAudio);
+			iNesAudio.player.play();
+		}
+	},
+	
+	writeAudio: function( samples ){
+		iNesAudio.samples = samples;					// make the wave file
+	},
+	
+	nextAudio: function()
+	{
+		iNesAudio.wave.Make(iNesAudio.samples);					// make the wave file
+		iNesAudio.player.src = iNesAudio.wave.dataURI;
+		iNesAudio.player.play();
+	}
+}

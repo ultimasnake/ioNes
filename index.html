@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>iNes</title>
+	<link href='css/iNes.css' rel='stylesheet' media='screen' type='text/css' />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<div id="emulator"></div>
+	
+	<img src="img/keypad.png" class="keypad" />
+	<div class="toucharea"></div>
+	
+	<div class='click_to_load'>
+		<img src="img/ines.png" class="logo" />
+		<br />
+		<span class="logo_name">ioNES</span>
+		<br />
+		<br />
+		<br/>
+		<span class="fa fa-2x fa-download"></span>
+		<br />
+		<br />
+		Click to load
+	</div>
+	
+
+	<span class="fa fa-2x fa-download download_rom"></span>
+	<span class="fa fa-2x fa-file-audio-o"></span>
+	
+	
+	
+	
+	<!-- Jquery required libraries -->
+	<script src="lib/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jquery/jqmultitouch.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- Dropbox -->
+	<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="ui0lkrhp6djv4s1"></script>
+
+	<!-- JSNES -->
+	<script src="lib/jsnes/nes.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jsnes/utils.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jsnes/cpu.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jsnes/keyboard.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jsnes/mappers.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jsnes/papu.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jsnes/ppu.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jsnes/rom.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jsnes/ui.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- Riffwave for audio creation -->
+	<script src="lib/other/riffwafe.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/other/base64-binary.js" type="text/javascript" charset="utf-8"></script>
+	
+	
+	<!-- ioNes wrappers -->
+	<script src="lib/ioNes/ioNes.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/ioNes/touch.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/ioNes/audio.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/ioNes/ui.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+        var nes;
+        $(function() {
+            nes = new JSNES({
+                'ui': $('#emulator').JSNESUI()
+            });
+			ioNes.initialize();
+			ioNesTouch.initialize();
+			ioNesAudio.initialize();
+			ioNesUI.initialize();
+		});
+    </script>
+</body>
+</html>

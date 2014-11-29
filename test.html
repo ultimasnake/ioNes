@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <title>mySynth</title>
+    <script>
+	if('webkitAudioContext' in window) {
+	    var myAudioContext = new webkitAudioContext();
+	}
+	function init()
+	{
+		request = new XMLHttpRequest();
+		request.open('GET', 'sound.mp3', true);
+		request.responseType = 'arraybuffer';
+		request.addEventListener('load', bufferSound, false);
+		request.send();
+	}
+	var mySource;
+	function bufferSound(event) {
+	    var request = event.target;
+		console.log( event.target );
+	    var source = myAudioContext.createBufferSource();
+	    source.buffer = myAudioContext.createBuffer(request.response, false);
+	    mySource = source;
+	}
+	
+    </script>
+    <style>
+        input { display: block; }
+    </style>
+</head>
+<body onload="init()">
+    <input id="play" onclick="toggleSound(this)" type="button" value="Play random sound" />
+ 
+    <span>Highpass:</span>
+    <input id="highpass" onchange="sliderChange(this)" type="range" min="0" max="1024" step="1" value="512" />
+    <span>Pan:</span>
+    <input id="pan" onchange="sliderChange(this)" type="range" min="-3" max="3" step="0.01" value="0" />
+    <span>Volume:</span>
+    <input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="1" />
+ 
+    <canvas width="300" height="200"></canvas>
+</body>
+</html>
